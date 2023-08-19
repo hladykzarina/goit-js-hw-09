@@ -1,0 +1,23 @@
+.body {
+  background-color: bisque;
+}
+
+.input-text {
+  margin-left: 40px;
+}
+
+.timer {
+  margin-top: 20px;
+  margin-left: 40px;
+  display: flex;
+  gap: 10px;
+}
+
+.value {
+  font-size: 25px;
+}
+
+.label {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 18px;
+}
