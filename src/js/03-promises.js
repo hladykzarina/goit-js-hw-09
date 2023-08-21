@@ -9,12 +9,13 @@ const elements = {
 
 function submit(evt) {
   evt.preventDefault();
-  const delay = Number(elements.delay.value);
+  let delay = Number(elements.delay.value);
   const step = Number(elements.step.value);
   const amount = Number(elements.amount.value);
   let position;
   for (let i = 1; i <= amount; i += 1) {
     createPromise(i, delay);
+    delay = delay + step;
   }
 }
 

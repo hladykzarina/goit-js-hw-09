@@ -33,10 +33,12 @@ const fp = flatpickr(input, {
         const timerId = setInterval(() => {
           const currentTime = new Date();
           const ms = selectedDates[0].getTime() - currentTime.getTime();
-          timerDays.textContent = addLeadingZero(convertMs(ms).days);
-          timerHours.textContent = addLeadingZero(convertMs(ms).hours);
-          timerMinutes.textContent = addLeadingZero(convertMs(ms).minutes);
-          timerSeconds.textContent = addLeadingZero(convertMs(ms).seconds);
+
+          timerDays.textContent = convertMs(ms).days;
+          timerHours.textContent = convertMs(ms).hours;
+          timerMinutes.textContent = convertMs(ms).minutes;
+          timerSeconds.textContent = convertMs(ms).seconds;
+
           if (ms < 1000) {
             clearInterval(timerId);
             timerDays.textContent = '00';
