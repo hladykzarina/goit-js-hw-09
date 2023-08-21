@@ -1,28 +1,41 @@
 import Notiflix from 'notiflix';
 
-const inputDelay = form.elements.delay;
-const inputDelayStep = form.elements.delay;
-const inputAmount = form.elements.delay;
-const btnCreatePromise = document.querySelector('button');
+const elements = {
+  form: document.querySelector('.form'),
+  delay: document.querySelector('input[name="delay"]'),
+  step: document.querySelector('input[name="step"]'),
+  amount: document.querySelector('input[name="amount"]'),
+};
 
-const position = inputAmount.value;
-const delay = inputDelayStep.value + inputDelay.value;
-
-btnCreatePromise.addEventListener('submit', createPromise);
-
-function createPromise(position, delay) {
-  const shouldResolve = Math.random() > 0.3;
-  if (shouldResolve) {
-    Notiflix.Notify.success(`✅ Fulfilled promise ${position} in ${delay}ms`);
-  } else {
-    Notiflix.Notify.failure(`❌ Rejected promise ${position} in ${delay}ms`);
+function submit(evt) {
+  evt.preventDefault();
+  const delay = Number(elements.delay.value);
+  const step = Number(elements.step.value);
+  const amount = Number(elements.amount.value);
+  let position;
+  for (let i = 1; i <= amount; i += 1) {
+    createPromise(i, delay);
   }
 }
 
-createPromise(position, delay)
-  .then(({ position, delay }) => {
-    console.log(`✅ Fulfilled promise ${position} in ${delay}ms`);
-  })
-  .catch(({ position, delay }) => {
-    console.log(`❌Rejected promise ${position} in ${delay}ms`);
+function createPromise(position, delay) {
+  const shouldResolve = Math.random() > 0.3;
+  const promise = new Promise((resolve, reject) => {
+    setTimeout(() => {
+      if (shouldResolve) {
+        resolve({ position, delay });
+      } else {
+        reject({ position, delay });
+      }
+    }, delay);
   });
+  promise
+    .then(({ position, delay }) => {
+      Notiflix.Notify.success(`✅ Fulfilled promise ${position} in ${delay}ms`);
+    })
+    .catch(({ position, delay }) => {
+      Notiflix.Notify.failure(`❌ Rejected promise ${position} in ${delay}ms`);
+    });
+}
+
+elements.form.addEventListener('submit', submit);
